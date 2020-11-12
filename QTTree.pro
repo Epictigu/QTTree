@@ -11,10 +11,12 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    renderarea.cpp \
     tree.cpp
 
 HEADERS += \
     mainwindow.h \
+    renderarea.h \
     tree.h
 
 FORMS += \

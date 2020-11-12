@@ -149,28 +149,3 @@ struct TreeNode* tree::TreeSearch(struct TreeNode* tree, int key){
     }
     return nullptr;
 }
-
-
-// Im binaeren Suchbaum tree soll im Knoten mit Schluessel key der Infoteil auf info gesetzt werden (sofern vorhanden)
-// Falls der Schluessel nicht vorhanden ist, wird nichts geaendert.
-void tree::TreeUpdate(struct TreeNode* tree, int key, string info){
-
-}
-
-// Erzeuge einen binaeren Suchbaum mit n Knoten. Die Schluessel sind Zufallszahlen im Bereich von 0 bis 2^32-1 (ganze Zahlen).
-// Alle Schluessel muessen verschiedenen sein. Der Infoteil ist jeweils der String "kwt".
-// Wenn seed gleich bleibt, soll der gleiche Zufallsbaum erzeugt werden.
-// Wenn ein anderer Wert fuer seed genommen wird, soll in der Regel ein anderer Baum erzeugt werden.
-struct TreeNode* tree::TreeGenerateRandomTree(int n, int seed){
-
-}
-
-// Erzeuge einen binaeren Suchbaum mit n Knoten. Als Schluessel werden 1, ..., n (in dieser Reihenfolge) eingefügt. Info "kwt".
-struct TreeNode* tree::TreeExampleSequenceN(int n){
-
-}
-
-// Erzeuge einen binaeren Suchbaum mit n Ebenen (n>0), die komplett belegt sind. Die Schluessel sind 1, ..., 2^n. Info "kwt".
-struct TreeNode* tree::TreeExampleFullLevelN(int n){
-
-}
