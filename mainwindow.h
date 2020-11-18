@@ -15,11 +15,12 @@ class MainWindow : public QWidget
 public:
     MainWindow();
 
-private slots:
+    RenderArea* getRenderArea();
+
+private:
     void penChanged();
     void brushChanged();
 
-private:
     RenderArea *renderArea;
 
 };
