@@ -9,8 +9,7 @@ class calculatePosition
 public:
     calculatePosition();
     void positionen_eintragen(struct TreeNode* tree);
-    int positionen_y(struct TreeNode* tree, int delta_y, int tiefe);
-    int positionen_x(struct TreeNode* tree, int delta_x, int atm);
+    knotpos* positionen_berechnen(struct TreeNode* tree, int delta_x, int delta_y, int size, int atm_x, int tiefe);
 };
 
 #endif // CALCULATEPOSITION_H

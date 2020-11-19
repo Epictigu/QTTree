@@ -46,7 +46,6 @@ knotpos* knotpos::getRight(){
     return rightK;
 }
 
-
 void knotpos::setLeft(knotpos *k){
     leftK = k;
 }
