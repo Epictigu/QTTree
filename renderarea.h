@@ -13,7 +13,7 @@ class RenderArea : public QWidget
     Q_OBJECT
 
 public:
-    explicit RenderArea(QWidget *parent = nullptr);
+    explicit RenderArea(int deltaX, int deltaY, QWidget *parent = nullptr);
 
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
@@ -35,6 +35,9 @@ private:
     bool transformed;
     QPixmap pixmap;
     list<knotpos*> knotList;
+
+    int deltaX;
+    int deltaY;
 
 };
 

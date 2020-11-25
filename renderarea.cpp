@@ -2,11 +2,13 @@
 #include <QPainter>
 #include <string>
 
-RenderArea::RenderArea(QWidget *parent) : QWidget(parent)
+RenderArea::RenderArea(int deltaX, int deltaY, QWidget *parent) : QWidget(parent)
 {
-
     antialiased = true;
     transformed = false;
+
+    this->deltaX = deltaX;
+    this->deltaY = deltaY;
 
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
@@ -15,6 +17,10 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent)
 
 void RenderArea::addKnot(knotpos *knot){
     knotList.push_back(knot);
+    if(knot->getX() + knot->getSize()*2 + deltaX > width())
+        resize(knot->getX()+knot->getSize()*2 + deltaX, height());
+    if(knot->getY() + knot->getSize()*2 + deltaY > height())
+        resize(width(), knot->getY()+knot->getSize()*2 + deltaY);
     repaint();
 }
 
@@ -57,6 +63,8 @@ void RenderArea::paintEvent(QPaintEvent * /* event */)
     painter.setPen(palette().dark().color());
     painter.setBrush(Qt::NoBrush);
     painter.drawRect(QRect(0, 0, width() - 1, height() - 1));
+
+    painter.end();
 }
 
 void RenderArea::drawLine(QPainter *painter, knotpos *pos1, knotpos *pos2){
@@ -68,12 +76,13 @@ void RenderArea::drawLine(QPainter *painter, knotpos *pos1, knotpos *pos2){
                      pos1->getY() + pos1->getSize(),
                      pos2->getX() + pos2->getSize(),
                      pos2->getY() + pos2->getSize());
+    painter->end();
 }
 
 
 QSize RenderArea::sizeHint() const
 {
-    return QSize(600, 800);
+    return QSize(width(), height());
 }
 
 QSize RenderArea::minimumSizeHint() const

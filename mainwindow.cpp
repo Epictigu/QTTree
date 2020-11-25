@@ -9,15 +9,11 @@
 
 MainWindow::MainWindow()
 {
-    renderArea = new RenderArea;
+    renderArea = new RenderArea(deltaX, deltaY);
 
 
 
     QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->setColumnStretch(0, 1);
-    mainLayout->setColumnStretch(3, 1);
-    mainLayout->addWidget(renderArea, 0, 0, 1, 4);
-    setLayout(mainLayout);
 
     penChanged();
     brushChanged();
@@ -32,7 +28,7 @@ MainWindow::MainWindow()
     tree = tree::TreeInsert(tree, 10, "Info zu Schluessel 10");
 
     knotpos *test0 = nullptr;
-    test0=        calculateposition::positionen_eintragen(tree, 100, 150, 40, renderArea);
+    test0 = calculateposition::positionen_eintragen(tree, deltaX, deltaY, 40, renderArea);
     renderArea->addKnot(test0);
     /*
     knotpos *test2 = new knotpos(210, 170, 40, 7);
@@ -45,6 +41,11 @@ MainWindow::MainWindow()
     renderArea->addKnot(test1);
     */
     setWindowTitle(tr("QTTree"));
+
+    mainLayout->setColumnStretch(0, 1);
+    mainLayout->setColumnStretch(3, 1);
+    mainLayout->addWidget(renderArea, 0, 0, 0, 0);
+    setLayout(mainLayout);
 }
 
 RenderArea* MainWindow::getRenderArea(){

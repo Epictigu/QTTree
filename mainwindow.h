@@ -21,7 +21,11 @@ private:
     void penChanged();
     void brushChanged();
 
+    int deltaX = 100;
+    int deltaY = 150;
+
     RenderArea *renderArea;
+
 
 };
 #endif // MAINWINDOW_H
