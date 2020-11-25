@@ -8,7 +8,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -24,8 +24,7 @@ private:
     int deltaX = 100;
     int deltaY = 150;
 
-    RenderArea *renderArea;
-
+    RenderArea *scene;
 
 };
 #endif // MAINWINDOW_H

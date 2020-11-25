@@ -9,11 +9,7 @@
 
 MainWindow::MainWindow()
 {
-    renderArea = new RenderArea(deltaX, deltaY);
-
-
-
-    QGridLayout *mainLayout = new QGridLayout;
+    scene = new RenderArea(deltaX, deltaY, this);
 
     penChanged();
     brushChanged();
@@ -28,28 +24,16 @@ MainWindow::MainWindow()
     tree = tree::TreeInsert(tree, 10, "Info zu Schluessel 10");
 
     knotpos *test0 = nullptr;
-    test0 = calculateposition::positionen_eintragen(tree, deltaX, deltaY, 40, renderArea);
-    renderArea->addKnot(test0);
-    /*
-    knotpos *test2 = new knotpos(210, 170, 40, 7);
-    knotpos *test3 = new knotpos(310, 170, 40, 212);
-    knotpos *test1 = new knotpos(260, 20, 40, 42, test2, test3);
+    test0 = calculateposition::positionen_eintragen(tree, deltaX, deltaY, 40, scene);
+    scene->addKnot(test0);
 
-
-    renderArea->addKnot(test2);
-    renderArea->addKnot(test3);
-    renderArea->addKnot(test1);
-    */
     setWindowTitle(tr("QTTree"));
 
-    mainLayout->setColumnStretch(0, 1);
-    mainLayout->setColumnStretch(3, 1);
-    mainLayout->addWidget(renderArea, 0, 0, 0, 0);
-    setLayout(mainLayout);
+    setCentralWidget(scene->view);
 }
 
 RenderArea* MainWindow::getRenderArea(){
-    return renderArea;
+    return scene;
 }
 
 void MainWindow::penChanged()
@@ -57,11 +41,11 @@ void MainWindow::penChanged()
     Qt::PenStyle style = Qt::PenStyle(Qt::SolidLine);
     Qt::PenCapStyle cap = Qt::PenCapStyle(Qt::FlatCap);
     Qt::PenJoinStyle join = Qt::PenJoinStyle(Qt::MiterJoin);
-    renderArea->setPen(QPen(Qt::black, 2, style, cap, join));
+    scene->setPen(QPen(Qt::black, 2, style, cap, join));
 }
 
 void MainWindow::brushChanged()
 {
    Qt::BrushStyle style = Qt::BrushStyle(Qt::SolidPattern);
-   renderArea->setBrush(QBrush(Qt::gray, style));
+   scene->setBrush(QBrush(Qt::gray, style));
 }

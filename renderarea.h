@@ -5,29 +5,31 @@
 #include <QWidget>
 #include <list>
 #include "knotpos.h"
+#include <QGraphicsView>
 
 using namespace std;
 
-class RenderArea : public QWidget
+class RenderArea : public QGraphicsScene
 {
     Q_OBJECT
 
 public:
     explicit RenderArea(int deltaX, int deltaY, QWidget *parent = nullptr);
 
-    QSize minimumSizeHint() const override;
-    QSize sizeHint() const override;
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
     void setPen(const QPen &pen);
     void setBrush(const QBrush &brush);
-    void setAntialiased(bool antialiased);
     void setTransformed(bool transformed);
     void addKnot(knotpos *knot);
 
+    QGraphicsView *view;
+
 protected:
-    void paintEvent(QPaintEvent *event) override;
+    void wheelEvent(QGraphicsSceneWheelEvent *event) override;
 
 private:
-    void drawLine(QPainter *painter, knotpos *pos1, knotpos *pos2);
+    void drawLine(knotpos *pos1, knotpos *pos2);
 
     QPen pen;
     QBrush brush;
@@ -35,10 +37,10 @@ private:
     bool transformed;
     QPixmap pixmap;
     list<knotpos*> knotList;
-
     int deltaX;
     int deltaY;
 
+    int _numScheduledScalings = 0;
 };
 
 #endif
