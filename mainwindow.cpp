@@ -6,6 +6,7 @@
 #include "calculateposition.h"
 #include <QGridLayout>
 #include <QComboBox>
+#include <QScreen>
 
 MainWindow::MainWindow()
 {
@@ -30,6 +31,13 @@ MainWindow::MainWindow()
     setWindowTitle(tr("QTTree"));
 
     setCentralWidget(scene->view);
+
+    QRectF qrf = scene->sceneRect();
+    QSize rec = qApp->screens()[0]->size();
+
+    int x = rec.width() - qrf.width(); if(x != 0) x /= 2;
+    int y = rec.height() - qrf.height(); if(y != 0) y /= 2;
+    move(x, y);
 }
 
 RenderArea* MainWindow::getRenderArea(){

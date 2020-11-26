@@ -6,6 +6,8 @@
 #include <windows.h>
 #include <QGraphicsLineItem>
 #include <QStyleOptionGraphicsItem>
+#include <QApplication>
+#include <QDesktopWidget>
 
 int zFont = 2000;
 int zCircle = 1000;
@@ -55,14 +57,20 @@ void RenderArea::addKnot(knotpos *knot){
     text->setPos(knot->getSize() - QFontMetrics(f).size(Qt::TextSingleLine, QString::number(knot->getValue())).width() / 2 + knot->getX() - 4,
                  knot->getSize() - QFontMetrics(f).size(Qt::TextSingleLine, QString::number(knot->getValue())).height() / 2 + knot->getY() - 4);
     text->setZValue(zFont++);
+
     if(knot->getLeft() != nullptr)
         drawLine(knot, knot->getLeft());
     if(knot->getRight() != nullptr)
         drawLine(knot, knot->getRight());
+
+    QSize rec = QApplication::desktop()->size();
+
     if(knot->getX() + knot->getSize()*2 + deltaX > width())
-        setSceneRect(0, 0, knot->getX()+knot->getSize()*2 + deltaX, height());
+        if(!(knot->getX() + knot->getSize()*2 + deltaX > rec.width()))
+            setSceneRect(0, 0, knot->getX()+knot->getSize()*2 + deltaX, height());
     if(knot->getY() + knot->getSize()*2 + deltaY > height())
-        setSceneRect(0, 0, width(), knot->getY()+knot->getSize()*2 + deltaY);
+        if(!(knot->getY() + knot->getSize()*2 + deltaY > rec.height()))
+            setSceneRect(0, 0, width(), knot->getY()+knot->getSize()*2 + deltaY);
     update();
 }
 
