@@ -16,13 +16,11 @@ MainWindow::MainWindow()
     brushChanged();
 
     struct TreeNode* tree = NULL;
-    tree = tree::TreeInsert(tree, 40, "Info zu Schluessel 40");
-    tree = tree::TreeInsert(tree, 10, "Info zu Schluessel 10");
-    tree = tree::TreeInsert(tree, 70, "Info zu Schluessel 70");
-    tree = tree::TreeInsert(tree, 60, "Info zu Schluessel 60");
-    tree = tree::TreeInsert(tree, 30, "Info zu Schluessel 30");
-    tree = tree::TreeInsert(tree, 20, "Info zu Schluessel 20");
-    tree = tree::TreeInsert(tree, 10, "Info zu Schluessel 10");
+    srand (time(NULL));
+    for (int i = 0; i < 100; i++) {
+        int random = rand() % 1000;
+        tree = tree::TreeInsert(tree, random, "Info zu Schluessel " + std::to_string(random));
+    }
 
     knotpos *test0 = nullptr;
     test0 = calculateposition::positionen_eintragen(tree, deltaX, deltaY, 40, scene);
