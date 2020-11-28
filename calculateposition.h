@@ -4,7 +4,7 @@
 #include "tree.h"
 #include "knotpos.h"
 #include "renderarea.h"
-#include "mainwindow.h"
+#include "showknot.h"
 
 class calculateposition
 {

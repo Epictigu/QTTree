@@ -5,17 +5,18 @@
 #include "renderarea.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class ShowKnot; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class ShowKnot : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow();
-
+    ShowKnot(struct TreeNode* tree);
     RenderArea* getRenderArea();
+
+    static ShowKnot* display(struct TreeNode* tree);
 
 private:
     void penChanged();
@@ -27,4 +28,5 @@ private:
     RenderArea *scene;
 
 };
+
 #endif // MAINWINDOW_H

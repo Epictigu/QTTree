@@ -15,8 +15,6 @@ int zLine = 0;
 
 RenderArea::RenderArea(int deltaX, int deltaY, QWidget *parent) : QGraphicsScene(parent)
 {
-    transformed = false;
-
     this->deltaX = deltaX;
     this->deltaY = deltaY;
 
@@ -32,7 +30,7 @@ void RenderArea::wheelEvent(QGraphicsSceneWheelEvent *event){
         view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
         static const double scaleFactor = 1.1;
         static double currentScale = 1.0;  // stores the current scale value.
-        static const double scaleMin = .3; // defines the min scale limit.
+        static const double scaleMin = .1; // defines the min scale limit.
         static const double scaleMax = 2.0;
 
         if(event->delta() > 0 && currentScale < scaleMax) {
@@ -46,9 +44,19 @@ void RenderArea::wheelEvent(QGraphicsSceneWheelEvent *event){
 }
 
 void RenderArea::addKnot(knotpos *knot){
-    knotList.push_back(knot);
-    QGraphicsEllipseItem *qE = addEllipse(knot->getX(),knot->getY(),knot->getSize()*2,knot->getSize()*2,pen, brush);
+    QBrush bC(brush);
+    if(knot->getColor() != nullptr)
+        bC.setColor((*knot->getColor()));
+    else
+        bC = brush;
+
+    QAbstractGraphicsShapeItem *qE = nullptr;
+    if(knot->getSquare())
+        qE = addRect(knot->getX(),knot->getY(),knot->getSize()*2,knot->getSize()*2, pen, bC);
+    else
+        qE = addEllipse(knot->getX(),knot->getY(),knot->getSize()*2,knot->getSize()*2, pen, bC);
     qE->setZValue(zCircle++);
+
     QFont f("Calibri");
     f.setWeight(QFont::Bold);
     f.setPointSize(18);
@@ -63,14 +71,10 @@ void RenderArea::addKnot(knotpos *knot){
     if(knot->getRight() != nullptr)
         drawLine(knot, knot->getRight());
 
-    QSize rec = QApplication::desktop()->size();
-
     if(knot->getX() + knot->getSize()*2 + deltaX > width())
-        if(!(knot->getX() + knot->getSize()*2 + deltaX > rec.width()))
-            setSceneRect(0, 0, knot->getX()+knot->getSize()*2 + deltaX, height());
+        setSceneRect(0, 0, knot->getX()+knot->getSize()*2 + deltaX, height());
     if(knot->getY() + knot->getSize()*2 + deltaY > height())
-        if(!(knot->getY() + knot->getSize()*2 + deltaY > rec.height()))
-            setSceneRect(0, 0, width(), knot->getY()+knot->getSize()*2 + deltaY);
+        setSceneRect(0, 0, width(), knot->getY()+knot->getSize()*2 + deltaY);
     update();
 }
 
@@ -89,11 +93,6 @@ QSize RenderArea::sizeHint() const
     return QSize(width(), height());
 }
 
-QSize RenderArea::minimumSizeHint() const
-{
-    return QSize(100, 100);
-}
-
 
 void RenderArea::setPen(const QPen &pen)
 {
@@ -107,8 +106,3 @@ void RenderArea::setBrush(const QBrush &brush)
     update();
 }
 
-void RenderArea::setTransformed(bool transformed)
-{
-    this->transformed = transformed;
-    update();
-}

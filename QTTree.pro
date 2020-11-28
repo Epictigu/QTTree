@@ -12,19 +12,19 @@ SOURCES += \
     calculateposition.cpp \
     knotpos.cpp \
     main.cpp \
-    mainwindow.cpp \
     renderarea.cpp \
+    showknot.cpp \
     tree.cpp
 
 HEADERS += \
     calculateposition.h \
     knotpos.h \
-    mainwindow.h \
     renderarea.h \
+    showknot.h \
     tree.h
 
 FORMS += \
-    mainwindow.ui
+    showknot.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

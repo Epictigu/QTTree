@@ -1,5 +1,4 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "showknot.h"
 #include "tree.h"
 #include "renderarea.h"
 #include "knotpos.h"
@@ -7,23 +6,20 @@
 #include <QGridLayout>
 #include <QComboBox>
 #include <QScreen>
+#include <QApplication>
+#include <iostream>
 
-MainWindow::MainWindow()
+ShowKnot::ShowKnot(struct TreeNode* tree)
 {
     scene = new RenderArea(deltaX, deltaY, this);
 
     penChanged();
     brushChanged();
 
-    struct TreeNode* tree = NULL;
-    srand (time(NULL));
-    for (int i = 0; i < 100; i++) {
-        int random = rand() % 1000;
-        tree = tree::TreeInsert(tree, random, "Info zu Schluessel " + std::to_string(random));
-    }
-
     knotpos *test0 = nullptr;
     test0 = calculateposition::positionen_eintragen(tree, deltaX, deltaY, 40, scene);
+    test0->setSquare();
+    test0->setColor(new QColor(Qt::yellow));
     scene->addKnot(test0);
 
     setWindowTitle(tr("QTTree"));
@@ -33,16 +29,21 @@ MainWindow::MainWindow()
     QRectF qrf = scene->sceneRect();
     QSize rec = qApp->screens()[0]->size();
 
-    int x = rec.width() - qrf.width(); if(x != 0) x /= 2;
-    int y = rec.height() - qrf.height(); if(y != 0) y /= 2;
+    int width = qrf.width(); if(width > rec.width()) width = rec.width();
+    int height = qrf.width(); if(height > rec.height() - QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight))  height = rec.height() - QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
+    resize(width, height);
+    setMinimumSize(width / 4, height / 4);
+
+    int x = rec.width() - width; if(x != 0) x /= 2; if(x < 0) x = 0;
+    int y = rec.height() - height; if(y != 0) y /= 2; if(y < 0) y = 0;
     move(x, y);
 }
 
-RenderArea* MainWindow::getRenderArea(){
+RenderArea* ShowKnot::getRenderArea(){
     return scene;
 }
 
-void MainWindow::penChanged()
+void ShowKnot::penChanged()
 {
     Qt::PenStyle style = Qt::PenStyle(Qt::SolidLine);
     Qt::PenCapStyle cap = Qt::PenCapStyle(Qt::FlatCap);
@@ -50,8 +51,14 @@ void MainWindow::penChanged()
     scene->setPen(QPen(Qt::black, 2, style, cap, join));
 }
 
-void MainWindow::brushChanged()
+void ShowKnot::brushChanged()
 {
    Qt::BrushStyle style = Qt::BrushStyle(Qt::SolidPattern);
    scene->setBrush(QBrush(Qt::gray, style));
 }
+
+ShowKnot* ShowKnot::display(struct TreeNode* tree){
+    ShowKnot* s = new ShowKnot(tree);
+    s->show();
+    return s;
+};

@@ -93,10 +93,10 @@ struct TreeNode* tree::TreeInsert(struct TreeNode* tree, int key, string info) {
                 tree->left = tree::NewTreeNode(key, info);
                 tree->left->up = tree;
                 if(tree->up != nullptr) {
-                    cout << "DEBUG (Insert): Lege Knoten " << key << " links unter Knoten " << tree->up->key << " an." << endl;
+                    //cout << "DEBUG (Insert): Lege Knoten " << key << " links unter Knoten " << tree->up->key << " an." << endl;
                 }
                 else {
-                    cout << "DEBUG (Insert): Lege Knoten " << key << " links unter Wurzel " << tree->key << " an." << endl;
+                    //cout << "DEBUG (Insert): Lege Knoten " << key << " links unter Wurzel " << tree->key << " an." << endl;
                 }
             }
 
@@ -113,10 +113,10 @@ struct TreeNode* tree::TreeInsert(struct TreeNode* tree, int key, string info) {
                 tree->right = tree::NewTreeNode(key, info);
                 tree->right->up = tree;
                 if(tree->up != nullptr) {
-                    cout << "DEBUG (Insert): Lege Knoten " << key << " rechts unter Knoten " << tree->up->key << " an." << endl;
+                    //cout << "DEBUG (Insert): Lege Knoten " << key << " rechts unter Knoten " << tree->up->key << " an." << endl;
                 }
                 else {
-                    cout << "DEBUG (Insert): Lege Knoten " << key << " rechts unter Wurzel " << tree->key << " an." << endl;
+                    //cout << "DEBUG (Insert): Lege Knoten " << key << " rechts unter Wurzel " << tree->key << " an." << endl;
                 }
             }
 
@@ -128,7 +128,7 @@ struct TreeNode* tree::TreeInsert(struct TreeNode* tree, int key, string info) {
 
         // oder existiert bereits ein Knoten mit gleichem Wert?
         else {
-            cout << "DEBUG (Insert): Knoten " << key << " existiert bereits." << endl;
+            //cout << "DEBUG (Insert): Knoten " << key << " existiert bereits." << endl;
         }
     }
 
