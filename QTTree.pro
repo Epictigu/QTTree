@@ -23,8 +23,7 @@ HEADERS += \
     showknot.h \
     tree.h
 
-FORMS += \
-    showknot.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

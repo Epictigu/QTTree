@@ -1,6 +1,19 @@
 #include "calculateposition.h"
 
-//für reduzierung von Parametern
+/**
+ * @brief Methode zum Eintragen der Positionen.
+ * @param tree
+ *          Übergebener Baum
+ * @param delta_x
+ *          deltaX zur Verschiebung
+ * @param delta_y
+ *          deltaY zur Verschiebung
+ * @param size
+ *          Knotengröße
+ * @param renderArea
+ *          Zeichenobjekt
+ * @return Startknoten
+ */
 knotpos* calculateposition::positionen_eintragen(struct TreeNode* tree,int delta_x, int delta_y, int size, RenderArea* renderArea){
     int konstanten[3] {0};
     konstanten[0] = delta_x;
@@ -11,6 +24,7 @@ knotpos* calculateposition::positionen_eintragen(struct TreeNode* tree,int delta
     renderArea->addKnot(start);
     return start;
 }
+
 
 knotpos* calculateposition::positionen_berechnen(struct TreeNode* tree, int *konstanten, int atm, int tiefe, RenderArea* renderArea){
 
@@ -40,6 +54,7 @@ knotpos* calculateposition::positionen_berechnen(struct TreeNode* tree, int *kon
 
     return me;                                                                                          //ich gebe meinem Vater meine position
 }
+
 
 //finde den Punkt der auf der x- Achse am nächsten ist
 int calculateposition::letzte_breite(knotpos* lead){

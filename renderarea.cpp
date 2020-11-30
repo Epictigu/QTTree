@@ -9,10 +9,15 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-int zFont = 2000;
-int zCircle = 1000;
-int zLine = 0;
-
+/**
+ * @brief Knostruktor zum Erstellen der Zeichenplatte.
+ * @param deltaX
+ *          Verschiebung auf X-Achse.
+ * @param deltaY
+ *          Verschiebung auf Y-Achse.
+ * @param parent
+ *          Obereres Zeichenobjekt.
+ */
 RenderArea::RenderArea(int deltaX, int deltaY, QWidget *parent) : QGraphicsScene(parent)
 {
     this->deltaX = deltaX;
@@ -25,13 +30,14 @@ RenderArea::RenderArea(int deltaX, int deltaY, QWidget *parent) : QGraphicsScene
     view->setRenderHint(QPainter::Antialiasing);
 }
 
+/**
+ * @brief Event-Methode beim Drehen des Mausrades
+ * @param event
+ *          Mausrad-Event
+ */
 void RenderArea::wheelEvent(QGraphicsSceneWheelEvent *event){
     if(GetKeyState(VK_CONTROL) < 0){
         view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-        static const double scaleFactor = 1.1;
-        static double currentScale = 1.0;  // stores the current scale value.
-        static const double scaleMin = .1; // defines the min scale limit.
-        static const double scaleMax = 2.0;
 
         if(event->delta() > 0 && currentScale < scaleMax) {
             view->scale(scaleFactor, scaleFactor);
@@ -43,7 +49,16 @@ void RenderArea::wheelEvent(QGraphicsSceneWheelEvent *event){
     }
 }
 
+/**
+ * @brief Methode zum Hinzufügen eines Knotens
+ *  Fügt wenn vorhanden die entsprechenden Linien hinzu.
+ * @param knot
+ *          KnotPos-Objekt mit den eingespeicherten Attributen des Knotens.
+ */
 void RenderArea::addKnot(knotpos *knot){
+    if(knot == nullptr)
+        throw "Der übergebene Knoten darf nicht 'null' sein!";
+
     QBrush bC(brush);
     if(knot->getColor() != nullptr)
         bC.setColor((*knot->getColor()));
@@ -55,7 +70,7 @@ void RenderArea::addKnot(knotpos *knot){
         qE = addRect(knot->getX(),knot->getY(),knot->getSize()*2,knot->getSize()*2, pen, bC);
     else
         qE = addEllipse(knot->getX(),knot->getY(),knot->getSize()*2,knot->getSize()*2, pen, bC);
-    qE->setZValue(zCircle++);
+    qE->setZValue(zCircle);
 
     QFont f("Calibri");
     f.setWeight(QFont::Bold);
@@ -64,7 +79,7 @@ void RenderArea::addKnot(knotpos *knot){
     QGraphicsTextItem *text = addText(QString::number(knot->getValue()), f);
     text->setPos(knot->getSize() - QFontMetrics(f).size(Qt::TextSingleLine, QString::number(knot->getValue())).width() / 2 + knot->getX() - 4,
                  knot->getSize() - QFontMetrics(f).size(Qt::TextSingleLine, QString::number(knot->getValue())).height() / 2 + knot->getY() - 4);
-    text->setZValue(zFont++);
+    text->setZValue(zFont);
 
     if(knot->getLeft() != nullptr)
         drawLine(knot, knot->getLeft());
@@ -78,28 +93,41 @@ void RenderArea::addKnot(knotpos *knot){
     update();
 }
 
-
+/**
+ * @brief Methode zum Hinzufügen einer Linie.
+ * @param pos1
+ *          KnotPos-Objekt mit den eingespeicherten Attributen des 1. Knotens.
+ * @param pos2
+ *          KnotPos-Objekt mit den eingespeicherten Attributen des 2. Knotens.
+ */
 void RenderArea::drawLine(knotpos *pos1, knotpos *pos2){
+    if(pos1 == nullptr || pos2 == nullptr)
+        throw "Keiner der übergebenen Knoten darf 'null' sein!";
+
     QGraphicsLineItem *qL = addLine(pos1->getX() + pos1->getSize(),
                      pos1->getY() + pos1->getSize(),
                      pos2->getX() + pos2->getSize(),
                      pos2->getY() + pos2->getSize());
-    qL->setZValue(zLine++);
+    qL->setZValue(zLine);
 }
 
 
-QSize RenderArea::sizeHint() const
-{
-    return QSize(width(), height());
-}
-
-
+/**
+ * @brief Setter-Methode für einen veränderten Stift.
+ * @param pen
+ *          Übergebener neuer Stift
+ */
 void RenderArea::setPen(const QPen &pen)
 {
     this->pen = pen;
     update();
 }
 
+/**
+ * @brief Setter-Methode für einen veränderten Brush.
+ * @param brush
+ *          Übergebener neuer Brush
+ */
 void RenderArea::setBrush(const QBrush &brush)
 {
     this->brush = brush;

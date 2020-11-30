@@ -3,12 +3,21 @@
 
 #include <QColor>
 
-
+/**
+ * @brief Klasse zum Speichern der Werte eines Knotens.
+ */
 class knotpos
 {
 public:
-    knotpos(int x, int y, int size, int value);
-    knotpos(int x, int y, int size, int value, knotpos *left, knotpos *right);
+    knotpos(int x, int y, int size, int value);                                     //Konstruktor für Endknoten.
+    knotpos(int x, int y, int size, int value, knotpos *left, knotpos *right);      //Konstruktor für Knoten mit Nachbarn.
+
+    /**
+     * ---------------------------
+     * Getter und Setter Methoden!
+     * ---------------------------
+     */
+
     int getX();
     int getY();
     int getSize();
@@ -25,17 +34,23 @@ public:
 
     bool getSquare() {return square;}
     QColor *getColor() {return color;}
+
+    /**
+     * ------------------------------------
+     * Ende der Getter und Setter Methoden.
+     * ------------------------------------
+     */
 private:
-    int x;
-    int y;
-    int size;
-    int value;
+    int x;                                  //x-Position des Knotens
+    int y;                                  //y-Position des Knotens
+    int size;                               //Größe des Knotens
+    int value;                              //Textwert des Knotens
 
-    QColor *color = nullptr;
-    bool square = false;
+    QColor *color = nullptr;                //Optionale Knotenfarbe
+    bool square = false;                    //Optionale Knotenform
 
-    knotpos *leftK;
-    knotpos *rightK;
+    knotpos *leftK;                         //Linker Knoten
+    knotpos *rightK;                        //Rechter Knoten
 };
 
 #endif
