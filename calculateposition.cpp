@@ -14,11 +14,12 @@
  *          Zeichenobjekt
  * @return Startknoten
  */
-knotpos* calculateposition::positionen_eintragen(struct TreeNode* tree,int delta_x, int delta_y, int size, RenderArea* renderArea){
+knotpos* calculateposition::positionen_eintragen(struct TreeNode* tree,int delta_x, int delta_y, RenderArea* renderArea){
     int konstanten[3] {0};
     konstanten[0] = delta_x;
     konstanten[1] = delta_y;
-    konstanten[2] = size;
+    if(delta_x >= delta_y){konstanten[2] = delta_x /2 -10;}
+    else{konstanten[2] = delta_y /2 -10;}
     knotpos* start =nullptr;
     start = positionen_berechnen(tree, konstanten, 0, 1, renderArea);
     renderArea->addKnot(start);
@@ -48,7 +49,8 @@ knotpos* calculateposition::positionen_berechnen(struct TreeNode* tree, int *kon
     if(halter != nullptr){
        PosRight = positionen_berechnen(halter, konstanten, atm, tiefe +1, renderArea);
     }
-    knotpos *me = new knotpos(atm, tiefe * konstanten[1], konstanten[2], tree->key, PosLeft, PosRight);
+    int dicke = dynamische_groesse(tiefe, konstanten[2]);
+    knotpos *me = new knotpos(atm, tiefe * konstanten[1], dicke, tree->key, PosLeft, PosRight);
     renderArea->addKnot(me);
 
 
@@ -66,3 +68,13 @@ int calculateposition::letzte_breite(knotpos* lead){
 
     return zaehler;
 }
+
+//änderung der Knotengröße abhängig von der Tiefe
+int calculateposition::dynamische_groesse(int tiefe, int size){
+    if(size - (size/10 * tiefe) >= 25){
+        return size - (size/10 * tiefe);
+    }
+    else
+        return 25;
+}
+
