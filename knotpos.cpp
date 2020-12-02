@@ -2,17 +2,15 @@
 
 knotpos::knotpos(int x, int y, int size, int value)
 {
-    this->x = x;
-    this->y = y;
-    this->size = size;
-    this->value = value;
-
-    this->leftK = nullptr;
-    this->rightK = nullptr;
+    knotpos(x, y , size, value, nullptr, nullptr);
 }
 
 knotpos::knotpos(int x, int y, int size, int value, knotpos *left, knotpos *right)
 {
+    if(x < 0 || y < 0)
+        throw "Die Koordinaten x oder y dürfen nicht kleiner als 0 sein!";
+    if(size < 1)
+        throw "Die Größe des Knotens darf nicht kleiner als 1 sein!";
     this->x = x;
     this->y = y;
     this->size = size;

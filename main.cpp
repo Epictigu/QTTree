@@ -5,7 +5,18 @@
 
 #include <QApplication>
 
-
+/**
+ * @brief Startfunktion zum Erstellen eines zufällligen Baums und Anzeigen über ShowKnot::Display.
+ *      Programmparameter sind optional, können aber bei Bedarf für einen modifizierten Zufallsbaum verwendet werden.
+ *      Parameter:
+ *      1. Maximale Anzahl an Knoten
+ *      2. Mindestwert der Knoten
+ *      3. Maximalwert der Knoten
+ *      Die Startfunktion ist nur ein Beispiel und sollte natürlich durch den eigenen Code ausgewechselt werden.
+ * @param argc - Anzahl der Parameter
+ * @param argv - Liste der Parameter
+ * @return Programmablauf
+ */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
