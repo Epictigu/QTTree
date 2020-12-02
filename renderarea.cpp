@@ -72,9 +72,11 @@ void RenderArea::addKnot(knotpos *knot){
         qE = addEllipse(knot->getX(),knot->getY(),knot->getSize()*2,knot->getSize()*2, pen, bC);
     qE->setZValue(zCircle);
 
+    double d = 40.0 / knot->getSize();
+
     QFont f("Calibri");
     f.setWeight(QFont::Bold);
-    f.setPointSize(18);
+    f.setPointSize(18.0 / d);
 
     QGraphicsTextItem *text = addText(QString::number(knot->getValue()), f);
     text->setPos(knot->getSize() - QFontMetrics(f).size(Qt::TextSingleLine, QString::number(knot->getValue())).width() / 2 + knot->getX() - 4,
