@@ -26,7 +26,21 @@ knotpos* calculateposition::positionen_eintragen(struct TreeNode* tree,int delta
     return start;
 }
 
-
+/**
+ * @brief calculateposition::positionen_berechnen
+ * @param tree
+ *          Übergebener Baum
+ * @param konstanten
+ *          optische konstante Werte zusammengefasst im array
+ * @param atm
+ *          die übergabe der actuellen positionen
+ * @param tiefe
+ *          die Stufe des Knotens
+ * @param renderArea
+ *          Zeichenobjekt
+ * @return  position actueller Knoten
+ *
+ */
 knotpos* calculateposition::positionen_berechnen(struct TreeNode* tree, int *konstanten, int atm, int tiefe, RenderArea* renderArea){
 
     knotpos *PosRight = nullptr, *PosLeft = nullptr;
@@ -58,7 +72,12 @@ knotpos* calculateposition::positionen_berechnen(struct TreeNode* tree, int *kon
 }
 
 
-//finde den Punkt der auf der x- Achse am nächsten ist
+/**
+ * @brief suche der letzten position links von der aktuellen
+ * @param lead
+ *          übergebener Knoten
+ * @return
+ */
 int calculateposition::letzte_breite(knotpos* lead){
     int zaehler = lead->getX();
     if(lead->getRight() != nullptr){
@@ -69,8 +88,19 @@ int calculateposition::letzte_breite(knotpos* lead){
     return zaehler;
 }
 
-//änderung der Knotengröße abhängig von der Tiefe
+
+
+/**
+ * @brief änderung der Knotengröße abhängig von der Tiefe
+ * @param tiefe
+ *          die Stufe des Knotens
+ * @param size
+ *          Optische größe des Knotens
+ * @return
+ */
 int calculateposition::dynamische_groesse(int tiefe, int size){
+
+    //knoten darf nicht kleiner werden als 25
     if(size - (size/10 * tiefe) >= 25){
         return size - (size/10 * tiefe);
     }
