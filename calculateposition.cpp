@@ -15,6 +15,23 @@
  * @return Startknoten
  */
 knotpos* calculateposition::positionen_eintragen(struct TreeNode* tree,int delta_x, int delta_y, RenderArea* renderArea){
+    if(tree == nullptr)
+    {
+        throw invalid_argument("Die uebergebene TreeNode ist ein Nullpointer.");
+    }
+    if(renderArea == nullptr)
+    {
+        throw invalid_argument("Die uebergebene RenderArea ist ein Nullpointer.");
+    }
+    if(delta_x < 1)
+    {
+        throw invalid_argument("Die uebergebene delta_x ist zu klein.");
+    }
+    if(delta_y < 50)
+    {
+        throw invalid_argument("Die uebergebene delta_y ist zu klein.");
+    }
+
     int konstanten[3] {0};
     konstanten[0] = delta_x;
     konstanten[1] = delta_y;

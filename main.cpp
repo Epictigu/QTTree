@@ -24,16 +24,16 @@ int main(int argc, char *argv[])
     struct TreeNode* tree = NULL;
     srand (time(NULL));
 
-    int x = 100;         //anzahl
+    int x = 10;         //anzahl
     int rMi = 0;        //rand min
-    int rMa = 1000;      //rand max
+    int rMa = 100;      //rand max
 
     if(argc > 0){
-        x = atoi(argv[1]); if (x == 0) x = 100;
+        x = atoi(argv[1]); if (x == 0) x = 10;
         if(argc > 1){
             rMi = atoi(argv[2]); if(rMi == 0) rMi = 0;
             if(argc > 2){
-                rMa = atoi(argv[3]); if(rMa == 0) rMa = 1000; rMa -= rMi;
+                rMa = atoi(argv[3]); if(rMa == 0) rMa = 100; rMa -= rMi;
             }
         }
     }
